@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styles from './styles'
+import {connect} from 'react-redux'
+import {setMovieInfo} from '../redux/moviesReducer'
 
 class MovieForm extends Component {
   constructor() {
@@ -19,6 +21,9 @@ class MovieForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    const {title, poster, rating} = this.state
+
+    this.props.setMovieInfo({title, poster, rating})
     this.props.history.push('/confirm')
   }
 
@@ -56,4 +61,9 @@ class MovieForm extends Component {
     )
   }
 }
-export default MovieForm
+
+//# connect takes in two arguments, a function and an object
+//# if you need redux state on this component, you need the function mapStateToProps
+//# If you want to change redux state on this component, you need the object mapDispatchToProps
+
+export default connect(null, {setMovieInfo})(MovieForm)
